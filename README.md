@@ -3,4 +3,5 @@ Cubuqus is riddle-game written in Javascript/HTML5 to target Android/iOs and the
 
 # Contact
 jfmulti@gmail.com
+
 JF-Entertainment
