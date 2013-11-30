@@ -1,0 +1,107 @@
+<html>
+  <head>
+    
+    <!-- General -->
+    <title>Cubuqus</title>
+    
+    <link rel="stylesheet" type="text/css" href="layout.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">  
+    
+    
+    <!-- JavaScript Imports -->
+
+    <script type="text/javascript" src="src/Libraries/prototype.js"></script>
+	
+	<script type="text/javascript" src="src/Game.js"></script>
+    
+    <script type="text/javascript" src="src/Graphics/Drawing/Graphics.js"></script>   
+    <script type="text/javascript" src="src/Graphics/Drawing/Bitmap.js"></script>
+    <script type="text/javascript" src="src/Graphics/Drawing/Font.js"></script>
+      
+    <script type="text/javascript" src="src/Graphics/Asset/General/Asset.js"></script>  
+        <script type="text/javascript" src="src/Graphics/Asset/HighRes.js"></script>  
+    
+    <script type="text/javascript" src="src/Graphics/Scene/General/SceneManager.js"></script>  
+    <script type="text/javascript" src="src/Graphics/Scene/General/BaseScene.js"></script>
+        <script type="text/javascript" src="src/Graphics/Scene/WelcomeScene.js"></script>       
+        <script type="text/javascript" src="src/Graphics/Scene/MenuScene.js"></script>  
+      
+    <script type="text/javascript" src="src/Graphics/Screen/General/BaseScreen.js"></script>
+        <script type="text/javascript" src="src/Graphics/Screen/LoadingScreen.js"></script>
+	  	<script type="text/javascript" src="src/Graphics/Screen/LevelSelectorScreen.js"></script>  
+        <script type="text/javascript" src="src/Graphics/Screen/MenuScreen.js"></script>
+      
+    <script type="text/javascript" src="src/Graphics/Filter/General/BaseFilter.js"></script>  
+        <script type="text/javascript" src="src/Graphics/Filter/BlurFilter.js"></script>  
+    
+    <script type="text/javascript" src="src/Graphics/Control/General/ControlManager.js"></script>  
+    <script type="text/javascript" src="src/Graphics/Control/General/BaseControl.js"></script>  
+        <script type="text/javascript" src="src/Graphics/Control/ProgressBar.js"></script> 
+        <script type="text/javascript" src="src/Graphics/Control/Button.js"></script> 
+      
+  </head>
+    
+  <body onload="onLoad()">
+    
+   <center><canvas width="1200" height="1600" id="game"></canvas></center>
+    
+    <script type="text/javascript">
+        
+        var Cubuqus = new Game( document.getElementById("game") );
+		
+        function onLoad(){
+			//Load Game
+			Cubuqus.Load();
+
+        }
+		
+        //Gameloop
+        (function (window) {
+            
+            var last = new Date();
+            
+            function gameLoop() {
+                
+                var now = new Date();
+                var elapsedSeconds = (now - last) / 1000;
+                last = now;
+                Cubuqus.Tick(elapsedSeconds);
+            }
+            
+            
+            
+            var animFrame = window.requestAnimationFrame ||
+                    window.webkitRequestAnimationFrame ||
+                    window.mozRequestAnimationFrame    ||
+                    window.oRequestAnimationFrame      ||
+                    window.msRequestAnimationFrame     ||
+                    null ;
+        
+            if ( animFrame !== null ) {
+                var recursiveAnim = function() {
+                    gameLoop();
+                    animFrame( recursiveAnim );
+                };
+                
+                // start the mainloop
+                animFrame( recursiveAnim );
+            } else {
+                var ONE_FRAME_TIME = 1000.0 / 60.0 ; //60fps
+                setInterval( gameLoop, ONE_FRAME_TIME );
+            }
+            
+            
+        } (window));
+        
+        document.onresize = function() {
+        	Cubuqus.onResize();
+        }
+
+        
+    </script>
+        
+      
+  </body>
+    
+</html>
